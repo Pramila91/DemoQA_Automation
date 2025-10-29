@@ -1,1 +1,1 @@
-{"total":2,"items":[{"uid":"c06fc694af5744e149daacfca6efb57c","name":"DemoQA Tests","statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1}}]}
+{"total":2,"items":[{"uid":"c06fc694af5744e149daacfca6efb57c","name":"DemoQA Tests","statistic":{"failed":0,"broken":1,"skipped":0,"passed":0,"unknown":0,"total":1}}]}
