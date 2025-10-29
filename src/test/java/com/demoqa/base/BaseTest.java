@@ -2,9 +2,11 @@ package com.demoqa.base;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.*;
 import org.testng.annotations.*;
 
+import java.io.File;
 import java.time.Duration;
 
 public class BaseTest {
@@ -13,7 +15,16 @@ public class BaseTest {
 
     @BeforeClass
     public void setup() {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
+        options.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver(options);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        // Create log and screenshot directories if not exist
+        new File("logs").mkdirs();
+        new File("screenshots").mkdirs();
+        //driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://demoqa.com/text-box");
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
