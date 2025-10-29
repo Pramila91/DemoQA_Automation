@@ -1,0 +1,28 @@
+# IntelliJ IDEA project files
+.idea/
+*.iml
+
+# Maven build output
+target/
+
+# Logs and screenshots
+logs/
+screenshots/
+
+# OS junk files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
+
+# Allure report output (if generated)
+allure-results/
+allure-report/
+
+# TestNG output folders
+test-output/
+
+# Backup or cache directories
+out/

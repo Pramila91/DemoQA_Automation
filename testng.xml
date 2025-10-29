@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="DemoQA Suite" verbose="1">
+<listeners>
+    <listener class-name="com.demoqa.listeners.TestListener"/>
+</listeners>
+
+<test name="TextBox DataProvider With Logger Test">
+    <classes>
+        <class name="com.demoqa.tests.TextBoxDataProviderWithLoggerTest"/>
+    </classes>
+</test>
+</suite>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <!-- Appenders: Output to Console and File -->
+    <Appenders>
+        <!-- Console Appender: Logs will be printed on the console -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level: %msg%n%throwable"/>
+        </Console>
+
+        <!-- File Appender: Logs will be saved in a log file -->
+        <File name="File" fileName="logs/testExecution.log" append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level: %msg%n%throwable"/>
+        </File>
+    </Appenders>
+
+    <!-- Loggers -->
+    <Loggers>
+        <!-- Root logger: Capture all logs at INFO level or higher -->
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
+</Configuration>
