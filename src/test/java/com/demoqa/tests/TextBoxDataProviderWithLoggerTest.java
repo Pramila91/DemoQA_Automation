@@ -10,7 +10,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 @Epic("DemoQA Tests")
-@Feature("Text Box")
+@Feature("Text Box Module")
+@Story("Submit form and verify output values")
+@Severity(SeverityLevel.CRITICAL)
 public class TextBoxDataProviderWithLoggerTest extends BaseTest {
 
     // Create a Logger instance
