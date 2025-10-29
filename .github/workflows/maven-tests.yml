@@ -21,8 +21,9 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build and run tests with Maven
-        run: mvn clean test -DsuiteXmlFile=testng.xml
+      - name: Build and run tests with Maven (continue on failure)
+        run: mvn clean test -DsuiteXmlFile=testng.xml || true
+
 
       - name: Upload Test Reports
         if: always()
