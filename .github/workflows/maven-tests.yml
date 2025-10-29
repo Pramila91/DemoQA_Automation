@@ -21,11 +21,10 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build and run tests with Maven (continue on failure)
+      - name: Build and run tests with Maven (continue even if tests fail)
         run: mvn clean test -DsuiteXmlFile=testng.xml || true
 
-
-      - name: Upload Test Reports
+      - name: Upload Test Reports and Logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -57,13 +56,36 @@ jobs:
           name: allure-results
           path: allure-results
 
-      - name: Generate Allure Report
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Generate Allure Report with History
         uses: simple-elf/allure-report-action@v1.7
         with:
           allure_results: allure-results
           allure_report: allure-report
           allure_history: allure-history
           keep_reports: 20
+
+      - name: Generate Allure Badges
+        run: |
+          sudo apt-get update && sudo apt-get install -y jq
+          mkdir -p allure-report/badges
+          if [ -f allure-report/widgets/summary.json ]; then
+            total=$(jq '.statistic.total' allure-report/widgets/summary.json)
+            passed=$(jq '.statistic.passed' allure-report/widgets/summary.json)
+            failed=$(jq '.statistic.failed' allure-report/widgets/summary.json)
+            broken=$(jq '.statistic.broken' allure-report/widgets/summary.json)
+            skipped=$(jq '.statistic.skipped' allure-report/widgets/summary.json)
+            echo "<svg xmlns='http://www.w3.org/2000/svg' width='150' height='20'><rect width='75' height='20' fill='#555'/><rect x='75' width='75' height='20' fill='#007ec6'/><text x='37.5' y='14' fill='#fff' font-family='Verdana' font-size='11' text-anchor='middle'>Tests</text><text x='112.5' y='14' fill='#fff' font-family='Verdana' font-size='11' text-anchor='middle'>${total}</text></svg>" > allure-report/badges/tests.svg
+            echo "<svg xmlns='http://www.w3.org/2000/svg' width='150' height='20'><rect width='75' height='20' fill='#555'/><rect x='75' width='75' height='20' fill='#4c1'/><text x='37.5' y='14' fill='#fff' font-family='Verdana' font-size='11' text-anchor='middle'>Passed</text><text x='112.5' y='14' fill='#fff' font-family='Verdana' font-size='11' text-anchor='middle'>${passed}</text></svg>" > allure-report/badges/passed.svg
+            echo "<svg xmlns='http://www.w3.org/2000/svg' width='150' height='20'><rect width='75' height='20' fill='#555'/><rect x='75' width='75' height='20' fill='#e05d44'/><text x='37.5' y='14' fill='#fff' font-family='Verdana' font-size='11' text-anchor='middle'>Failed</text><text x='112.5' y='14' fill='#fff' font-family='Verdana' font-size='11' text-anchor='middle'>${failed}</text></svg>" > allure-report/badges/failed.svg
+            echo "<svg xmlns='http://www.w3.org/2000/svg' width='150' height='20'><rect width='75' height='20' fill='#555'/><rect x='75' width='75' height='20' fill='#fe7d37'/><text x='37.5' y='14' fill='#fff' font-family='Verdana' font-size='11' text-anchor='middle'>Broken</text><text x='112.5' y='14' fill='#fff' font-family='Verdana' font-size='11' text-anchor='middle'>${broken}</text></svg>" > allure-report/badges/broken.svg
+            echo "<svg xmlns='http://www.w3.org/2000/svg' width='150' height='20'><rect width='75' height='20' fill='#555'/><rect x='75' width='75' height='20' fill='#dfb317'/><text x='37.5' y='14' fill='#fff' font-family='Verdana' font-size='11' text-anchor='middle'>Skipped</text><text x='112.5' y='14' fill='#fff' font-family='Verdana' font-size='11' text-anchor='middle'>${skipped}</text></svg>" > allure-report/badges/skipped.svg
+          fi
 
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
