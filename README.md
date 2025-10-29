@@ -1,4 +1,8 @@
 # 🧪 DemoQA Automation Framework (Selenium + TestNG + Log4j2)
+![Build](https://github.com/Pramila91/DemoQA_Automation/actions/workflows/maven-tests.yml/badge.svg)
+[![Allure Report](https://img.shields.io/badge/Allure-Report-38a2ff?logo=allure&logoColor=white)](https://pramila91.github.io/DemoQA_Automation/)
+
+A Selenium Hybrid Automation Framework built using Java, TestNG, Maven, and Allure Reporting for the DemoQA web application.
 
 ## 🚀 Overview
 This project is a **Java Selenium automation framework** built using **TestNG**, following the **Page Object Model (POM)** design pattern.  
